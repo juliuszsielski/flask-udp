@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flask-SocketIO Test</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.min.js"></script>
+</head>
+<body>
+    <!-- <p id="value"></p> -->
+    <div id="log"></div>
+</body>
+<script>
+    $(document).ready(function(){
+        //connect to the socket server.
+        var socket = io.connect('http://' + document.domain + ':' + location.port + '/');
+        // var numbers_received = [];
+
+        //receive details from server
+        socket.on('message', function(msg) {
+            console.log('Received message: ' + msg);
+            // maintain a list of ten numbers
+            // if (numbers_received.length >= 10){
+            //     numbers_received.shift()
+            // }            
+            // numbers_received.push(msg.number);
+            // numbers_string = '';
+            // for (var i = 0; i < numbers_received.length; i++){
+            //     numbers_string = numbers_string + '<p>' + numbers_received[i].toString() + '</p>';
+            // }
+            $('#log').html(msg);
+        });
+
+    });
+</script>
+
+</html>
