@@ -19,6 +19,11 @@ def handle_message(message):
     print('(server) received: ' + message)
     socketio.emit('message', message)
 
+# @socketio.on('json')
+# def handle_json(json):
+#     print('(server) received json: ' + str(json))
+#     socketio.emit('json message', json)
+
 @socketio.on('connect')
 def connect():
     print('(server): client connected')

@@ -10,6 +10,8 @@
 </head>
 <body>
     <!-- <p id="value"></p> -->
+    <input id="slider1" type="range" min="0" max="180">
+    <input id="slider2" type="range" min="0" max="180">
     <div id="log"></div>
 </body>
 <script>
@@ -18,20 +20,23 @@
         var socket = io.connect('http://' + document.domain + ':' + location.port + '/');
         // var numbers_received = [];
 
-        //receive details from server
+        // receive messages from server
         socket.on('message', function(msg) {
-            console.log('Received message: ' + msg);
-            // maintain a list of ten numbers
-            // if (numbers_received.length >= 10){
-            //     numbers_received.shift()
-            // }            
-            // numbers_received.push(msg.number);
-            // numbers_string = '';
-            // for (var i = 0; i < numbers_received.length; i++){
-            //     numbers_string = numbers_string + '<p>' + numbers_received[i].toString() + '</p>';
-            // }
+        console.log('Received message: ' + msg);
             $('#log').html(msg);
+            document.getElementById("slider1").value = msg;
         });
+
+        var sliders = document.getElementsByTagName("input");	
+        
+        // send messages from server
+        for (var i = 0; i < sliders.length; i++) {
+		    sliders[i].oninput = function () {
+                console.log(this.id + ": " + this.value);
+			    socket.emit('message', this.value);
+                // socket.emit('json', {'data': this.value})
+            }
+        }
 
     });
 </script>

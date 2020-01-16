@@ -1,4 +1,5 @@
 import socketio
+import json
 
 sio = socketio.Client()
 sio.connect('http://localhost:8000')
@@ -12,7 +13,7 @@ def message(data_received):
     print('(server) received: ' + data_received)
 
 while True:
-    data_send = raw_input("Please enter something: ")
+    data_send = input("Please enter something: ")
     # data_send = 'aaaa'
     sio.emit('message', data_send)
     print('(client) send: ' + data_send)
